@@ -1,0 +1,64 @@
+EE450_Socket_Project
+
+Full Name:
+-Xueyu Wang
+
+Student ID:
+-2670589054
+
+What you have done in the assignment:
+-I did a project to generate customized recommendations based on user queries. I created four cpp files which are serverA.cpp, serverB.cpp, mainserver.cpp and client.cpp.
+ServerA and ServerB respectively process two txt files which contain the sources about many user's networking in different countries and get a network map. The backend servers will send it to mainserver.
+And once the backend server receive the query, it will search through its local data, identify the new friend to be recommended and reply to the main server by UDP.
+Client will build the TCP connection with the main server and send the query to main server. The main server will finish the TCP connection with client and filter the query 
+from the client to send to the right backend server to get the right recommendation. Once the main server get the recommendation from the respectively backend server, 
+it will send the results to the client.
+
+What your code files are and what each one of them does:
+-serverA.cpp, serverB.cpp: process the data file and send the respective country list to main server. Once receive the query from main server, it will search for the recommended friend and send it to main server.
+servermain.cpp: build TCP connection with the client and UDP connection with the backend servers. Receive queries from the client, filter the queries and send the queries to the right backend server which 
+contains the requested country. Once the main server get the results from the backend server, it will send the results to the client.
+client.cpp: build TCP connection with main server, send the query to the main server and print the results coming from the main server.
+
+The format of all the messages exchanged:
+-serverA/B:
+The server A/B is up and running using UDP on port <server A/B port number>
+The server A/B has sent a country list to Main Server
+The server A/B has received request for finding possible friends of User<user ID> in <Country Name>
+User<user ID> does not show up in <Country Name>
+The server A/B has sent “User<user ID> not found” to Main Server
+The server A/B is searching possible friends for User<user ID> …
+Here are the results: User<user ID1>
+The server A/B has sent the result(s) to Main Server
+
+mainserver:
+The Main server is up and running.
+The Main server has received the country list from server A using UDP over port <Main server UDP port number>
+The Main server has received the country list from server B using UDP over port <Main server UDP port number>
+Server A | Server B
+<Country Name 1> | <Country Name 3>
+<Country Name 2> |
+The Main server has received the request on User <user ID> in <Country Name> from client<client ID> using TCP over port <Main server TCP port number>
+<Country Name> does not show up in server A&B
+The Main Server has sent “Country Name: Not found” to client1/2 using TCP over port <Main server TCP port number>
+<Country Name> shows up in server A/B
+The Main Server has sent request from User <user ID> to server A/B using UDP over port <Main server UDP port number>
+The Main server has received searching result(s) of User <user ID> from server<A/B>
+The Main Server has sent searching result(s) to client using TCP over port <Main Server TCP port number>
+The Main server has received “User ID: Not found” from server <A/B>
+The Main Server has sent error to client using TCP over <Main Server UDP port number>
+
+client:
+Client is up and running
+Please enter the User ID:
+Please enter the Country Name:
+Client has sent User<user ID> and <Country Name> to Main Server using TCP
+<Country Name> not found
+User<user ID> not found
+Client has received results from Main Server: User<user ID1> is/are possible friend(s) of User<user ID> in <Country Name>
+
+Any idiosyncrasy of your project. It should say under what conditions the project fails, if any.
+-In the client terminal, you have to input a number--user id, and a string--country name. Otherwise, the code won't run correctly.
+
+Reused Code: Did you use code from anywhere for your project? If not, say no. If so, say what functions and where they're from.
+-TCP and UDP socket initialization, creating, binding, accepting, sending, and receiving codes are all from Beej's Tutorial of socket programming.
